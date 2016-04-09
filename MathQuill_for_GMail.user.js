@@ -182,8 +182,6 @@ function install_key_handler() {
 
 function install_css() {
     try {
-	//var link = $("<link>").attr("rel","stylesheet").attr("type","text/css").attr("href","https://raw.githubusercontent.com/dominique-unruh/mathquill-for-gmail/master/mathquill.css"); // does not work since GitHub serves as text/plain -- A MathQuill CDN would help, but only if served as https
-
 	var link = $("<link>").attr("rel","stylesheet").attr("type","text/css").attr("href","https://kodu.ut.ee/~unruh/mathquill-0.10.1/mathquill.css");
 	link.appendTo("head");
 	//GM_addStyle(GM_getResourceText("mathquillcss").replace(/url\(font\//g,"url(https://raw.githubusercontent.com/dominique-unruh/mathquill-for-gmail/master/font/"));
