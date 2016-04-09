@@ -32,4 +32,4 @@ The userscript has a number of quirks:
 * When clicking on a formula to edit it, the formula editor will appear, but there will also be GMail's menu for resizing the picture! You can simply ignore it, it vanishes as soon as you start typing.
 * In Chromium, when you edit an empty formula and type the first letter, the formula editor loses focus. Simply press Ctrl-M or click on the formula editor to get the focus back.
 
-
+(For anything you would like fixed, please express so in the corresponding issue. I am more likely to try and fix a problem if there is expressed interest.)
