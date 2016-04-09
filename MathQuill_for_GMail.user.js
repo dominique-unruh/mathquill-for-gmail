@@ -5,7 +5,7 @@
 // @version     1
 // @resource    mathquillcss mathquill.css
 // @require     https://code.jquery.com/jquery-2.2.2.min.js
-// @require     https://raw.githubusercontent.com/dominique-unruh/mathquill-for-gmail/master/mathquill.min.js
+// @require     https://kodu.ut.ee/~unruh/mathquill-0.10.1/mathquill.min.js
 // @grant       GM_addStyle
 // @grant       GM_getResourceText
 // ==/UserScript==
@@ -186,8 +186,10 @@ function install_key_handler() {
 function install_css() {
     try {
 	//var link = $("<link>").attr("rel","stylesheet").attr("type","text/css").attr("href","https://raw.githubusercontent.com/dominique-unruh/mathquill-for-gmail/master/mathquill.css"); // does not work since GitHub serves as text/plain -- A MathQuill CDN would help, but only if served as https
-	//link.appendTo("head");
-	GM_addStyle(GM_getResourceText("mathquillcss").replace(/url\(font\//g,"url(https://raw.githubusercontent.com/dominique-unruh/mathquill-for-gmail/master/font/"));
+
+	var link = $("<link>").attr("rel","stylesheet").attr("type","text/css").attr("href","https://kodu.ut.ee/~unruh/mathquill-0.10.1/mathquill.css");
+	link.appendTo("head");
+	//GM_addStyle(GM_getResourceText("mathquillcss").replace(/url\(font\//g,"url(https://raw.githubusercontent.com/dominique-unruh/mathquill-for-gmail/master/font/"));
     } catch (e) {
 	console.error(e);
     }
