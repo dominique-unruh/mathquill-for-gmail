@@ -28,8 +28,9 @@ To edit an existing formula, either click on it, or position the cursor after it
 ## Quirks
 
 The userscript has a number of quirks:
-* If you close the compose window, or GMail while a formula editor is still open, a textbox and some useless characters will be included in your mail. Always leave the formula editor with enter.
-* When clicking on a formula to edit it, the formula editor will appear, but there will also be GMail's menu for resizing the picture! You can simply ignore it, it vanishes as soon as you start typing.
-* In Chromium, when you edit an empty formula and type the first letter, the formula editor loses focus. Simply press Ctrl-M or click on the formula editor to get the focus back.
+* If you close the compose window, or GMail while a formula editor is still open, a textbox and some useless characters will be included in your mail. Always leave the formula editor with enter. (#3)
+* When clicking on a formula to edit it, the formula editor will appear, but there will also be GMail's menu for resizing the picture! You can simply ignore it, it vanishes as soon as you start typing. (#4)
+* In Chromium, when you edit an empty formula and type the first letter, the formula editor loses focus. Simply press Ctrl-M or click on the formula editor to get the focus back. (#2)
+* Paste (e.g., Ctrl-V) does not work. (#1)
 
-(For anything you would like fixed, please express so in the corresponding issue. I am more likely to try and fix a problem if there is expressed interest.)
+(For anything you would like fixed, please express so in the corresponding [issue] (https://github.com/dominique-unruh/mathquill-for-gmail/issues). I am more likely to try and fix a problem if there is expressed interest.)
