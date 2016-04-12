@@ -2,7 +2,9 @@
 
 This Greasemonkey userscript allows you to edit formulas in GMail messages using a graphical formula editor.
 
-The script uses [MathQuill] (http://mathquill.com/) as the formula editor, and the [CodeCogs server] (https://latex.codecogs.com/) for generating the images.
+The script uses [MathQuill] (http://mathquill.com/) as the formula
+editor, and the [CodeCogs server] (https://latex.codecogs.com/) (with
+their generous permission [\[1\]](#codecogs)) for generating the images.
 
 ## Installation
 
@@ -34,3 +36,7 @@ The userscript has a number of quirks:
 * Paste (e.g., Ctrl-V) does not work. (#1)
 
 (For anything you would like fixed, please express so in the corresponding [issue] (https://github.com/dominique-unruh/mathquill-for-gmail/issues). I am more likely to try and fix a problem if there is expressed interest.)
+
+----
+
+<sup><a name="codecogs"/>[1] Please note that if you are generating a lot of equations from a single domain, i.e. over 3000/day, then you may need to arrange a commercial licence with CodeCogs to support continued hosting of the service. Please see their terms and conditions: http://www.codecogs.com/latex/usage.php.</sup>
