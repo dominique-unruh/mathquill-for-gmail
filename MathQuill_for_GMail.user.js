@@ -1,10 +1,17 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        MathQuill for Gmail
 // @namespace   http://unruh.de
 // @include     https://mail.google.com/mail/*
+// @include     about:blank?MathQuill-for-GMail-options
 // @version     0.0.1-1
 // @require     https://code.jquery.com/jquery-2.2.2.min.js
 // @require     https://kodu.ut.ee/~unruh/mathquill-0.10.1/mathquill.min.js
+// @resource    options_html options.html
+// @grant       GM_registerMenuCommand
+// @grant       GM_getResourceText
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @grant       GM_openInTab
 // ==/UserScript==
 
 var MQ = MathQuill.getInterface(2);
@@ -115,7 +122,7 @@ function is_mq_img(img) {
     if (img == null) return false;
     if (img.tagName != "IMG") return false;
     if (img.src == null) return false;
-    if (!img.src.contains("https://latex.codecogs.com/")) return false;
+    if (!img.src.includes("https://latex.codecogs.com/")) return false;
     return true;
 }
 
@@ -190,8 +197,65 @@ function install_css() {
     }
 };
 
-install_css();
-install_image_click_handler();
-install_key_handler();
+function get_option_with_default(option) {
+  var value = GM_getValue(option);
+  if (value==undefined) {
+    if (option=="hotkey")
+      return "ctrl+m";
+    else {
+      console.error("No default for option "+option);
+      return undefined;
+    }
+  } else
+    return value;
+}
+
+function options_page() {
+  try {
+    document.body.innerHTML = GM_getResourceText("options_html");
+
+    $(".option").each(function () {
+      var name = this.name;
+      this.value = get_option_with_default(name);
+    });
+
+    $(".option").on("input",function () { $("#save").removeAttr("disabled"); $(this).addClass("changed"); });
+
+
+    $("#save").on("click",function () { 
+      try {
+	$(".option").each(function () {
+	  var name = this.name;
+	  var value = this.value;
+	  GM_setValue(name,value);
+	});
+	$("#save").attr("disabled","disabled");
+	$(".option").removeClass("changed");
+      } catch (e) {
+	console.error(e);
+      }
+    });
+
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+if (document.location=="about:blank?MathQuill-for-GMail-options") {
+  console.log("Options page");
+  options_page();
+} else {
+  install_css();
+  install_image_click_handler();
+  install_key_handler();
+  GM_registerMenuCommand("MathQuill for GMail - Options",
+			 function() { 
+			   try {
+			     GM_openInTab("about:blank?MathQuill-for-GMail-options",false);
+			   } catch (e) {
+			     console.error(e);
+			   }},
+			 "q");
+}
 
 console.log("MathQuill script loaded on "+document.location);
