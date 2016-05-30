@@ -17,6 +17,7 @@
 var MQ = MathQuill.getInterface(2);
 
 var previousActiveElement = null;
+var current_math = null;
 
 /*
   Updates the img-element "img" to show the math described by LaTeX code ltx.
@@ -64,6 +65,7 @@ function element_before_cursor() {
 function mq_close(math) {
     try {
 	//console.log("Closing MQ");
+        current_math = null;
 	var img = $("#"+math.el().id+"-image");
 	var ltx = math.latex();
 	update_pic(img,ltx);
@@ -101,7 +103,7 @@ function edit_math(img) {
 	var math = $("#"+id);
 	//console.log("old math",math);
 	if (math.length>0) {
-	    MQ(math[0]).focus();
+	    current_math = MQ(math[0]).focus();
 	    return;
 	}
     }
@@ -115,6 +117,7 @@ function edit_math(img) {
 	});
     math.latex(latex);
     math.focus();
+    current_math = math;
 };
 
 // img - Element
@@ -143,7 +146,7 @@ function image_handler(event) {
 };
 
 function install_image_click_handler() {
-    document.addEventListener("click",image_handler,true);
+    window.addEventListener("click",image_handler,true);
 };
 
 function create_math() {
@@ -158,8 +161,23 @@ function create_math() {
 }
 
 function install_key_handler() {
-    document.addEventListener("keydown",function(event) {
+    window.addEventListener("keydown",function(event) {
 	try {
+        console.log("current_math",current_math);
+        
+        
+        // If there is an active math editor, dispatch keydown events directly to that math editor
+        // This avoids triggering key events of the webpage
+        if (current_math!==null) {
+            current_math.focus();
+            var event2 = $.Event(event.type,event);
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            console.log("redispatching",event,event2,current_math);
+            event2.preventDefault = function() { event.preventDefault(); };
+            $(current_math.el()).trigger(event2);
+        }
+        
 	    if (event.ctrlKey && event.keyCode==77) {
 		var img = element_before_cursor();
 		//console.log("before cursor: ",img);
@@ -181,11 +199,11 @@ function install_key_handler() {
 		
 		//console.log("Inserted");
 	    }
-	} catch (e) {
+    } catch (e) {
 		console.error(e);
 	}
     }, true);
-};
+}
 
 function install_css() {
     try {
@@ -195,7 +213,7 @@ function install_css() {
     } catch (e) {
 	console.error(e);
     }
-};
+}
 
 function get_option_with_default(option) {
   var value = GM_getValue(option);
