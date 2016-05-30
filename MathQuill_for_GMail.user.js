@@ -1,8 +1,8 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        MathQuill for Gmail
 // @namespace   http://unruh.de
 // @include     https://mail.google.com/mail/*
-// @include     about:blank?MathQuill-for-GMail-options
+// @include     https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.html
 // @version     0.0.1-2
 // @require     https://code.jquery.com/jquery-2.2.2.min.js
 // @require     https://kodu.ut.ee/~unruh/mathquill-0.10.1/mathquill.min.js
@@ -259,7 +259,7 @@ function options_page() {
   }
 }
 
-if (document.location=="about:blank?MathQuill-for-GMail-options") {
+if (document.location=="https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.html") {
   console.log("Options page");
   options_page();
 } else {
@@ -269,7 +269,7 @@ if (document.location=="about:blank?MathQuill-for-GMail-options") {
   GM_registerMenuCommand("MathQuill for GMail - Options",
 			 function() { 
 			   try {
-			     GM_openInTab("about:blank?MathQuill-for-GMail-options",false);
+			     GM_openInTab("https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.html",false);
 			   } catch (e) {
 			     console.error(e);
 			   }},
