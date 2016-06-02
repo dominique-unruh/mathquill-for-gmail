@@ -3,7 +3,7 @@
 // @namespace   http://unruh.de
 // @include     https://mail.google.com/mail/*
 // @include     https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.html
-// @version     0.0.1-3
+// @version     0.0.1-4
 // @require     https://code.jquery.com/jquery-2.2.2.min.js
 // @require     https://kodu.ut.ee/~unruh/mathquill-0.10.1/mathquill.min.js
 // @resource    options_html options.html
