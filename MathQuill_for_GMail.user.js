@@ -160,22 +160,47 @@ function create_math() {
     return img[0];
 }
 
+/* Reroutes an event to current_math object */
+function reroute_event(event) {
+  current_math.focus();
+  var event2 = $.Event(event.type,event);
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+  // console.log("redispatching",event,event2,current_math);
+  event2.preventDefault = function() { event.preventDefault(); };
+  $(current_math.el()).trigger(event2);
+}
+
+function install_paste_handler() {
+  window.addEventListener("paste",function(event) {
+    try {
+      console.log("paste event",current_math,event,event.clipboardData.getData('text/plain'));
+        if (current_math!==null) {
+/*	  console.log("discarding paste event");
+          event.stopPropagation();
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          current_math.focus();
+	  current_math.paste("hello"); */
+	  reroute_event(event);
+	  return;
+	}
+    } catch (e) {
+      console.error(e);
+    }
+  }, true);
+}
+
+
+
 function install_key_handler() {
     window.addEventListener("keydown",function(event) {
 	try {
-        console.log("current_math",current_math);
-        
-        
         // If there is an active math editor, dispatch keydown events directly to that math editor
         // This avoids triggering key events of the webpage
         if (current_math!==null) {
-            current_math.focus();
-            var event2 = $.Event(event.type,event);
-            event.stopPropagation();
-            event.stopImmediatePropagation();
-            console.log("redispatching",event,event2,current_math);
-            event2.preventDefault = function() { event.preventDefault(); };
-            $(current_math.el()).trigger(event2);
+	  reroute_event(event);
+	  return;
         }
         
 	    if (event.ctrlKey && event.keyCode==77) {
@@ -266,6 +291,7 @@ if (document.location=="https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.ht
   install_css();
   install_image_click_handler();
   install_key_handler();
+  install_paste_handler();
   GM_registerMenuCommand("MathQuill for GMail - Options",
 			 function() { 
 			   try {
