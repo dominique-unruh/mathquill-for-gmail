@@ -25,11 +25,11 @@ var current_math = null;
   img -- a jQuery object containing one img
 */
 function update_pic(img,ltx) {
-	var url = "https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09" + encodeURIComponent(ltx);
-	if (ltx=="") {
-	    ltx = "<empty math>";
-	    url = "https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09?";
-	}
+    var url = "https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09" + encodeURIComponent(ltx);
+    if (ltx=="") {
+        ltx = "<empty math>";
+        url = "https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09?";
+    }
 	img.one("load",function () {
 	    try {
 		var width = (img[0].naturalWidth*0.36)+"em";
@@ -94,20 +94,18 @@ function edit_math(img) {
 
     previousActiveElement = document.activeElement;
 
-    //console.log("old id",id);
-    if (id==null) {
+    if (id!==null) {
+        var m = $("#"+id);
+        if (m.length>0) {
+            current_math = MQ(m[0]).focus();
+            return;
+        }
+    }
+
 	id = ("mq-"+Math.random()).replace(".","");
 	img.attr("mathquill-id",id);
 	img.attr("id",id+"-image");
-    } else {
-	var math = $("#"+id);
-	//console.log("old math",math);
-	if (math.length>0) {
-	    current_math = MQ(math[0]).focus();
-	    return;
-	}
-    }
-    
+
     var mathSpan = $("<span>").attr("id",id);
     img.after(mathSpan);
     img.attr("style","filter: blur(.5px)");
@@ -118,7 +116,7 @@ function edit_math(img) {
     math.latex(latex);
     math.focus();
     current_math = math;
-};
+}
 
 // img - Element
 function is_mq_img(img) {
