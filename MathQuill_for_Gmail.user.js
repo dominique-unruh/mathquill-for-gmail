@@ -215,9 +215,23 @@ function install_paste_handler() {
   }, true);
 }
 
+function install_keypress_handler() {
+  window.addEventListener("keypress",function(event) {
+    try {
+      // If there is an active math editor, dispatch keydown events directly to that math editor
+      // This avoids triggering key events of the webpage
+      if (current_math!==null) {
+        reroute_event(event);
+        return;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, true);
+}
 
 
-function install_key_handler() {
+function install_keydown_handler() {
   window.addEventListener("keydown",function(event) {
     try {
       // If there is an active math editor, dispatch keydown events directly to that math editor
@@ -314,10 +328,11 @@ if (document.location=="https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.ht
 } else {
   install_css();
   install_image_click_handler();
-  install_key_handler();
+  install_keydown_handler();
+  install_keypress_handler();
   install_paste_handler();
   GM_registerMenuCommand("MathQuill for Gmail - Options",
-                         function() { 
+                         function() {
                            try {
                              GM_openInTab("https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.html",false);
                            } catch (e) {
