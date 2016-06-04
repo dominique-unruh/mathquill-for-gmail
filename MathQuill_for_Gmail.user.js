@@ -30,22 +30,27 @@ function update_pic(img,ltx) {
     ltx = "<empty math>";
     url = "https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09?";
   }
+  var img0 = img[0];
   img.one("load",function () {
     try {
-      var width = (img[0].naturalWidth*0.36)+"em";
+      var width = (img0.naturalWidth*0.028)+"em";
       //console.log("img loaded",width,img[0].naturalWidth,img[0].naturalHeight);
-      img.attr("width",width);
-      img.attr("height","auto");
+      //img.attr("width",width);
+      //img.attr("height","auto");
+      img.removeAttr("style");
+      img0.style.height = "auto";
+      img0.style.width = width;
 
-      if (img[0].naturalHeight >= 45) {
-        img.attr("style","vertical-align: middle");
-      } else
-        img.removeAttr("style");
+      if (img[0].naturalHeight >= 45)
+        img0.style.verticalAlign = "middle";
+
     } catch (e) {
       console.error(e);
     }
   });
-  img.attr("style","border: dashed 2px green; filter: blur(.5px)");
+  img0.style.border = "dashed 2px green";
+  img0.style.filter = "blur(.5px)";
+  //img.attr("style","border: dashed 2px green; filter: blur(.5px)");
   img.attr("src",url);
   img.attr("alt",ltx);
   img.attr("title",ltx);
@@ -60,7 +65,7 @@ function update_pic(img,ltx) {
 function element_before_cursor() {
   var sel = document.getSelection();
   if (!sel.isCollapsed) return null;
-  var range = sel.getRangeAt(0);
+  var range = sel.getRangeAt(0).cloneRange();
   var idx = range.startOffset - 1;
   var container = range.startContainer;
 console.log("element_before_cursor",container,idx);
@@ -76,11 +81,6 @@ console.log("element_before_cursor",container,idx);
     // skip this node
     range.selectNode(node);
   }
-/*  if (idx < 0) return null;
-  var node = range.startContainer.childNodes[idx];
-console.log("element_before_cursor",node,sel,range,idx);
-  if (! (node instanceof Element)) return null;
-  return node; */
 };
 
 function mq_close(math) {
@@ -129,7 +129,7 @@ function edit_math(img) {
 
   var mathSpan = $("<span>").attr("id",id);
   img.after(mathSpan);
-  img.attr("style","filter: blur(.5px)");
+  img[0].style.filter = "filter: blur(.5px)";
 
   var math = MQ.MathField(mathSpan[0], {
     handlers: { enter: mq_close },
@@ -173,8 +173,10 @@ function create_math() {
   img.attr("src","https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09?");
   img.attr("alt","<empty math>");
   img.attr("title","<empty math>");
-  img.attr("width","7em");
-  img.attr("height","auto");
+  img[0].style.width = ".5em";
+  img[0].style.height = "auto";
+  //img.attr("width","7em");
+  //img.attr("height","auto");
   //update_pic($(img),"");
   return img[0];
 }
