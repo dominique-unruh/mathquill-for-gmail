@@ -51,15 +51,36 @@ function update_pic(img,ltx) {
   img.attr("title",ltx);
 }
 
+/* Returns the element just before the cursor.
+
+   Will return null if before the cursor is not an element (but, e.g., text).
+   Will return null if the selection is a range. 
+   Ignores non-text/element nodes (e.g., comment nodes).
+*/
 function element_before_cursor() {
   var sel = document.getSelection();
   if (!sel.isCollapsed) return null;
   var range = sel.getRangeAt(0);
   var idx = range.startOffset - 1;
-  if (idx < 0) return null;
+  var container = range.startContainer;
+console.log("element_before_cursor",container,idx);
+  while (true) { // Invariant: the node we look for is left of the start of the range.
+    if (range.startOffset <= 0) {
+      range.selectNode(range.startContainer);
+      continue;
+    }
+    if (range.startContainer instanceof Text) return null;
+    var node = range.startContainer.childNodes[range.startOffset-1];
+    if (node instanceof Element) return node;
+    if (node instanceof Text && node.textContent!="") return null;
+    // skip this node
+    range.selectNode(node);
+  }
+/*  if (idx < 0) return null;
   var node = range.startContainer.childNodes[idx];
+console.log("element_before_cursor",node,sel,range,idx);
   if (! (node instanceof Element)) return null;
-  return node;
+  return node; */
 };
 
 function mq_close(math) {
@@ -123,7 +144,7 @@ function is_mq_img(img) {
   if (img == null) return false;
   if (img.tagName != "IMG") return false;
   if (img.src == null) return false;
-  if (!img.src.includes("https://latex.codecogs.com/")) return false;
+  if (!img.src.startsWith("https://latex.codecogs.com/") && !img.src.startsWith("http://latex.codecogs.com/")) return false;
   return true;
 }
 
@@ -203,7 +224,7 @@ function install_key_handler() {
 
       if (event.ctrlKey && event.keyCode==77) {
         var img = element_before_cursor();
-        //console.log("before cursor: ",img);
+        console.log("before cursor: ",img);
         if (is_mq_img(img)) {
           edit_math($(img));
           return;
