@@ -16,7 +16,10 @@
 
 var MQ = MathQuill.getInterface(2);
 
+/** The document that was active (focussed) before the math editor was opened.
+    (It should get the focus back after editing.) */
 var previousActiveElement = null;
+/** The current math editor (if there is one) */
 var current_math = null;
 
 /*
@@ -83,6 +86,8 @@ console.log("element_before_cursor",container,idx);
   }
 };
 
+/** Closes the current math editor. 
+    (And updates the image, and puts cursor and focus back in place.) */
 function mq_close(math) {
   try {
     //console.log("Closing MQ");
@@ -100,8 +105,6 @@ function mq_close(math) {
     range.setStartAfter(img[0]);
     range.setEndAfter(img[0]);
     sel.addRange(range);
-
-    //console.log("Closed MQ");
   } catch (e) {
     console.error(e);
     return;
