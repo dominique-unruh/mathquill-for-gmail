@@ -44,10 +44,8 @@ implemented.
 ## Quirks
 
 The plugin has a number of quirks:
-* If you close the compose window, or Gmail while a formula editor is still open, a textbox and some useless characters will be included in your mail. Always leave the formula editor with enter. (#3)
-* When clicking on a formula to edit it, the formula editor will appear, but there will also be Gmail's menu for resizing the picture! You can simply ignore it, it vanishes as soon as you start typing. (#4)
-* In Chromium, when you edit an empty formula and type the first letter, the formula editor loses focus. Simply press Ctrl-M or click on the formula editor to get the focus back. (#2)
-* Paste (e.g., Ctrl-V) does not work. (#1)
+* If you close the compose window, or Gmail while a formula editor is still open, a textbox and some useless characters will be included in your mail. Always leave the formula editor with enter. (issue #3)
+* When clicking on a formula to edit it, the formula editor will appear, but there will also be Gmail's menu for resizing the picture! You can simply ignore it, it vanishes as soon as you start typing. (issue #4)
 
 (For anything you would like fixed, please express so in the corresponding [issue] (https://github.com/dominique-unruh/mathquill-for-gmail/issues). I am more likely to try and fix a problem if there is expressed interest.)
 
