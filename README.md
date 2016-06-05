@@ -11,14 +11,14 @@ their generous permission [\[1\]](#codecogs)) for generating the images.
 ### Firefox
 
 * Install the [Greasemonkey addon] (https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/).
-* Open [MathQuill_for_Gmail.user.js] (https://github.com/dominique-unruh/mathquill-for-gmail/raw/master/MathQuill_for_Gmail.user.js) to install the plugin. (Firefox should automatically ask whether you want to install it.)
+* Open [MathQuill_for_Gmail.user.js] (https://github.com/dominique-unruh/mathquill-for-gmail/raw/install/MathQuill_for_Gmail.user.js) to install the plugin. (Firefox should automatically ask whether you want to install it.)
 * Activate the plugin (via Tools->Greasemonkey->Manage User Scripts).
 * If Gmail is already open, reload the page.
 
 ### Chrome / Chromium
 
 * Install the [Tampermonkey extension] (https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo).
-* Open [MathQuill_for_Gmail.user.js] (https://github.com/dominique-unruh/mathquill-for-gmail/raw/master/MathQuill_for_Gmail.user.js) to install the plugin. (Chrome should offer you the option to install it now.)
+* Open [MathQuill_for_Gmail.user.js] (https://github.com/dominique-unruh/mathquill-for-gmail/raw/install/MathQuill_for_Gmail.user.js) to install the plugin. (Chrome should offer you the option to install it now.)
 * If Gmail is already open, reload the page.
 
 ## Usage
