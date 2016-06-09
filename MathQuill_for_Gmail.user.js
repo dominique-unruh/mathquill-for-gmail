@@ -3,7 +3,8 @@
 // @namespace   http://unruh.de
 // @include     https://mail.google.com/mail/*
 // @include     https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.html
-// @version     0.0.2rev20160605
+// @include     https://rawgit.com/dominique-unruh/mathquill-for-gmail/master/mathquill-for-gmail-options.html
+// @version     0.0.2rev20160609
 // @require     https://code.jquery.com/jquery-2.2.2.min.js
 // @require     https://kodu.ut.ee/~unruh/mathquill-0.10.1/mathquill.min.js
 // @resource    options_html options.html
@@ -334,7 +335,7 @@ if (document.location=="https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.ht
   GM_registerMenuCommand("MathQuill for Gmail - Options",
                          function() {
                            try {
-                             GM_openInTab("https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.html",false);
+                             GM_openInTab("https://rawgit.com/dominique-unruh/mathquill-for-gmail/master/mathquill-for-gmail-options.html",false);
                            } catch (e) {
                              console.error(e);
                            }},
