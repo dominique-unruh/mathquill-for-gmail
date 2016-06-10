@@ -3,10 +3,11 @@
 // @namespace   http://unruh.de
 // @include     https://mail.google.com/mail/*
 // @include     https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.html
-// @include     https://rawgit.com/dominique-unruh/mathquill-for-gmail/master/mathquill-for-gmail-options.html
-// @version     0.0.2rev20160609
+// @include     https://rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
+// @include     https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
+// @version     0.0.2rev20160610
 // @require     https://code.jquery.com/jquery-2.2.2.min.js
-// @require     https://kodu.ut.ee/~unruh/mathquill-0.10.1/mathquill.min.js
+// @require     https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/cdn/mathquill-0.10.1/mathquill.min.js
 // @resource    options_html options.html
 // @grant       GM_registerMenuCommand
 // @grant       GM_getResourceText
@@ -269,14 +270,14 @@ function install_keydown_handler() {
   }, true);
 }
 
+/* Adds the mathquill.css style-sheet to the current page (needed for math editors to render correctly */
 function install_css() {
   try {
-    var link = $("<link>").attr("rel","stylesheet").attr("type","text/css").attr("href","https://kodu.ut.ee/~unruh/mathquill-0.10.1/mathquill.css");
-        link.appendTo("head");
-        //GM_addStyle(GM_getResourceText("mathquillcss").replace(/url\(font\//g,"url(https://raw.githubusercontent.com/dominique-unruh/mathquill-for-gmail/master/font/"));
-    } catch (e) {
-        console.error(e);
-    }
+    var link = $("<link>").attr("rel","stylesheet").attr("type","text/css").attr("href","https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/cdn/mathquill-0.10.1/mathquill.css");
+    link.appendTo("head");
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 function get_option_with_default(option) {
@@ -323,7 +324,12 @@ function options_page() {
   }
 }
 
-if (document.location=="https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.html") {
+
+
+
+/* Main program */
+
+if (document.location=="https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html") {
   console.log("Options page");
   options_page();
 } else {
@@ -335,7 +341,7 @@ if (document.location=="https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.ht
   GM_registerMenuCommand("MathQuill for Gmail - Options",
                          function() {
                            try {
-                             GM_openInTab("https://rawgit.com/dominique-unruh/mathquill-for-gmail/master/mathquill-for-gmail-options.html",false);
+                             GM_openInTab("https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html",false);
                            } catch (e) {
                              console.error(e);
                            }},
@@ -343,6 +349,8 @@ if (document.location=="https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.ht
 }
 
 console.log("MathQuill script loaded on "+document.location);
+
+
 
 // Local Variables:
 // indent-tabs-mode: nil
