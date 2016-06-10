@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        MathQuill for Gmail
+// @description	WYSIWYG editing of math in Gmail (and possibly other pages)
 // @namespace   http://unruh.de
 // @include     https://mail.google.com/mail/*
-// @include     https://kodu.ut.ee/~unruh/mathquill-for-gmail-options.html
 // @include     https://rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
 // @include     https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
 // @version     0.0.2rev20160610
@@ -55,7 +55,6 @@ function update_pic(img,ltx) {
   });
   img0.style.border = "dashed 2px green";
   img0.style.filter = "blur(.5px)";
-  //img.attr("style","border: dashed 2px green; filter: blur(.5px)");
   img.attr("src",url);
   img.attr("alt",ltx);
   img.attr("title",ltx);

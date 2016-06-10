@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [MathQuill for Gmail](#mathquill-for-gmail)
+  - [Installation](#installation)
+    - [Firefox](#firefox)
+    - [Chrome / Chromium](#chrome--chromium)
+  - [Usage](#usage)
+    - [Using the plugin on other webpages](#using-the-plugin-on-other-webpages)
+  - [Quirks](#quirks)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # MathQuill for Gmail
 
 This plugin (Greasemonkey userscript) allows you to edit formulas in Gmail messages using a graphical formula editor.
