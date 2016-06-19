@@ -264,7 +264,10 @@ function install_keydown_handler() {
         return;
       }
 
-      if (event.ctrlKey && event.keyCode==77) {
+      /* console.log("checking key",event.ctrlKey==hotkey_ctrl && event.shiftKey==hotkey_shift && event.altKey==hotkey_alt && event.keyCode==hotkey_keycode,
+                  event.ctrlKey==hotkey_ctrl, event.shiftKey==hotkey_shift, event.altKey==hotkey_alt, event.keyCode==hotkey_keycode,
+                  "config",hotkey_ctrl, hotkey_shift, hotkey_alt, hotkey_keycode             )  */
+      if (event.ctrlKey==hotkey_ctrl && event.shiftKey==hotkey_shift && event.altKey==hotkey_alt && event.keyCode==hotkey_keycode) {
         var img = element_before_cursor();
         console.log("before cursor: ",img);
         if (is_mq_img(img)) {
@@ -305,7 +308,7 @@ function get_option_with_default(option) {
   var value = GM_getValue(option);
   if (value==undefined) {
     if (option=="hotkey")
-      return "ctrl+m";
+      return "ctrl-m";
     else {
       console.error("No default for option "+option);
       return undefined;
@@ -314,7 +317,61 @@ function get_option_with_default(option) {
     return value;
 }
 
+function parse_hotkey(hotkey) {
+  var parts = hotkey.split("-");
+  hotkey_ctrl = false;
+  hotkey_alt = false;
+  hotkey_shift = false;
+  while (parts.length>1) {
+    var part = parts[0].toLowerCase();
+    if (part=="ctrl")
+      hotkey_ctrl = true;
+    else if (part=="shift")
+      hotkey_shift = true;
+    else if (part=="alt")
+      hotkey_alt = true;
+    else
+      break;
+    parts.shift();
+  }
+  if (parts.length!=1) {
+    console.error("Invalid hotkey "+hotkey+" (invalid suffix "+parts.join("-")+")");
+    return null;
+  }
+  part = parts[0];
+  if (part.length != 1) {
+    console.error("Invalid hotkey "+hotkey+" (last part should be a single letter)",hotkey,parts,part);
+    return null;
+  }
+  var chr = part[0].toUpperCase();
+  if (chr < 'A' || chr > 'Z') {
+    console.error("Invalid hotkey "+hotkey+" (last part should be a-z)",hotkey,parts,part,chr);
+    return null;
+  }
+  hotkey_keycode = chr.charCodeAt(0);
+  return true;
+}
+
 function options_page() {
+  function save_options() {
+    $(".option").each(function () {
+      if ($(this).hasClass("changed")) {
+        var name = this.name;
+        var value = this.value;
+        console.log("Saving option: "+name+" := "+value);
+        GM_setValue(name,value);
+      }
+    });
+  };
+  function check_options() {
+    var hotkey = $("#hotkey")[0].value;
+    var parse_success = parse_hotkey(hotkey);
+    console.log("hotkey",parse_success);
+    if (parse_success===null)
+      return "Invalid hotkey '"+hotkey+"'";
+    return null;
+  };
+
   try {
     document.body.innerHTML = GM_getResourceText("options_html");
 
@@ -328,11 +385,14 @@ function options_page() {
 
     $("#save").on("click",function () { 
       try {
-        $(".option").each(function () {
-          var name = this.name;
-          var value = this.value;
-          GM_setValue(name,value);
-        });
+        var error = check_options();
+        if (error==null) {
+          $("#error").text("");
+        } else {          
+          $("#error").text("ERROR: "+error+" (options not saved)");
+          return;
+        }
+        save_options();
         $("#save").attr("disabled","disabled");
         $(".option").removeClass("changed");
       } catch (e) {
@@ -354,6 +414,7 @@ if (document.location=="https://cdn.rawgit.com/dominique-unruh/mathquill-for-gma
   console.log("Options page");
   options_page();
 } else {
+  parse_hotkey(get_option_with_default("hotkey"));
   install_css();
   install_image_click_handler();
   install_keydown_handler();

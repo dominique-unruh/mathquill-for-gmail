@@ -2,10 +2,19 @@
 
 <style>
   .changed { border: solid 1px red; }
+  #error { color: red; font-weight: bold; }
+  .description { font-size: smaller; }
+  .optionname { font-weight: bold; }
 </style>
 
-<button disabled="disabled" id=save>Save</button>
+<button disabled="disabled" id=save accesskey="s" type=button>Save</button>
+
+<div id="error"></div>
 
 <table>
-  <tr><td>Hotkey:</td><td><input class=option name=hotkey></td><td>(Not yet implemented.)</tr>
+  <tr>
+    <td class="optionname">Hotkey:</td>
+    <td><input class=option name=hotkey id=hotkey></td>
+    <td class=description>Syntax: [ctrl-][alt-][shift-]x where x is a single letter (a-z). (Only letters are supported in hotkeys.)
+  </tr>
 </table>
