@@ -38,17 +38,7 @@ function update_pic(img,ltx) {
   var img0 = img[0];
   img.one("load",function () {
     try {
-      var width = (img0.naturalWidth*0.028)+"em";
-      //console.log("img loaded",width,img[0].naturalWidth,img[0].naturalHeight);
-      //img.attr("width",width);
-      //img.attr("height","auto");
-      img.removeAttr("style");
-      img0.style.height = "auto";
-      img0.style.width = width;
-
-      if (img[0].naturalHeight >= 45)
-        img0.style.verticalAlign = "middle";
-
+      reset_pic(img);
     } catch (e) {
       console.error(e);
     }
@@ -58,6 +48,23 @@ function update_pic(img,ltx) {
   img.attr("src",url);
   img.attr("alt",ltx);
   img.attr("title",ltx);
+}
+
+function reset_pic(img) {
+  var img0 = img[0];
+
+  if (img0.title == "<empty math>") {
+    img.remove();
+    return;
+  }
+
+  var width = (img0.naturalWidth*0.028)+"em";
+  img.removeAttr("style");
+  img0.style.height = "auto";
+  img0.style.width = width;
+  
+  if (img[0].naturalHeight >= 45)
+    img0.style.verticalAlign = "middle";
 }
 
 /* Returns the element just before the cursor.
@@ -88,14 +95,16 @@ console.log("element_before_cursor",container,idx);
 };
 
 /** Closes the current math editor. 
-    (And updates the image, and puts cursor and focus back in place.) */
-function mq_close(math) {
+    (And updates the image, and puts cursor and focus back in place.) 
+
+    If update==true, the image is updated, otherwise the edit is canceled
+*/
+function mq_close(math,update) {
   try {
     //console.log("Closing MQ");
     current_math = null;
     var img = $("#"+math.el().id+"-image");
     var ltx = math.latex();
-    update_pic(img,ltx);
     $(math.el()).remove();
 
     // Put cursor after img
@@ -106,6 +115,10 @@ function mq_close(math) {
     range.setStartAfter(img[0]);
     range.setEndAfter(img[0]);
     sel.addRange(range);
+    if (update) 
+      update_pic(img,ltx); // Should happen after fixing cursor since it may delete the img
+    else
+      reset_pic(img);
   } catch (e) {
     console.error(e);
     return;
@@ -133,10 +146,10 @@ function edit_math(img) {
 
   var mathSpan = $("<span>").attr("id",id);
   img.after(mathSpan);
-  img[0].style.filter = "filter: blur(.5px)";
+  img[0].style.filter = "blur(.5px)";
 
   var math = MQ.MathField(mathSpan[0], {
-    handlers: { enter: mq_close },
+    handlers: { enter: function (m) { mq_close(m,true); } },
   });
   math.latex(latex);
   math.focus();
@@ -238,7 +251,16 @@ function install_keydown_handler() {
       // If there is an active math editor, dispatch keydown events directly to that math editor
       // This avoids triggering key events of the webpage
       if (current_math!==null) {
-        reroute_event(event);
+        console.log("keydown",event,event.keyCode);
+
+        if (event.keyCode == 27) { // ESC
+          mq_close(current_math,false);
+          event.stopImmediatePropagation();
+          event.stopPropagation();
+          event.preventDefault();
+          return;
+        } else
+          reroute_event(event);
         return;
       }
 
@@ -353,4 +375,5 @@ console.log("MathQuill script loaded on "+document.location);
 
 // Local Variables:
 // indent-tabs-mode: nil
+// js-indent-level: 2
 // End:
