@@ -1,6 +1,10 @@
 MATHQUILL_VERSION=0.10.1
 
-all : up_version
+all : git
+
+git : up_version
+	nohup git-gui &
+	sleep 60
 
 up_version :
 	./up-version.sh
