@@ -5,9 +5,9 @@
 // @include     https://mail.google.com/mail/*
 // @include     https://rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
 // @include     https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
-// @version     0.0.2rev20160619
+// @version     0.0.2rev20160630
 // @require     https://code.jquery.com/jquery-2.2.2.min.js
-// @require     https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/cdn/mathquill-0.10.1/mathquill.min.js
+// @require     https://cdn.rawgit.com/dominique-unruh/mathquill/ea34612/cdn/mathquill.min.js
 // @resource    options_html options.html
 // @grant       GM_registerMenuCommand
 // @grant       GM_getResourceText
@@ -212,7 +212,7 @@ function reroute_event(event) {
 function install_paste_handler() {
   window.addEventListener("paste",function(event) {
     try {
-      console.log("paste event",current_math,event,event.clipboardData.getData('text/plain'));
+      console.log("paste event",current_math,event);
       if (current_math!==null) {
 /*          console.log("discarding paste event");
           event.stopPropagation();
