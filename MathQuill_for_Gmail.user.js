@@ -297,7 +297,7 @@ function install_keydown_handler() {
 /* Adds the mathquill.css style-sheet to the current page (needed for math editors to render correctly */
 function install_css() {
   try {
-    var link = $("<link>").attr("rel","stylesheet").attr("type","text/css").attr("href","https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/cdn/mathquill-0.10.1/mathquill.css");
+    var link = $("<link>").attr("rel","stylesheet").attr("type","text/css").attr("href","https://cdn.rawgit.com/dominique-unruh/mathquill/ea34612/cdn/mathquill.css");
     link.appendTo("head");
   } catch (e) {
     console.error(e);
@@ -406,6 +406,16 @@ function options_page() {
 }
 
 
+/* Adds macros to the MathQuill editor. Currently these are hardcoded.
+   TODO: configurable macros */
+function add_macros() {
+  MQ.addMacro("abs","\\left|\\cursor\\right|");
+  MQ.addMacro("norm","\\left\\lVert\\cursor\\right\\rVert");
+  MQ.addMacro("ket","\\left|\\cursor\\right\\rangle");
+  MQ.addMacro("bra","\\left\\langle\\cursor\\right|");
+  MQ.addMacro("braket","\\left\\langle\\cursor\\mid\\right\\rangle");
+}
+
 
 
 /* Main program */
@@ -420,6 +430,7 @@ if (document.location=="https://cdn.rawgit.com/dominique-unruh/mathquill-for-gma
   install_keydown_handler();
   install_keypress_handler();
   install_paste_handler();
+  add_macros();
   GM_registerMenuCommand("MathQuill for Gmail - Options",
                          function() {
                            try {
