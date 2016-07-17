@@ -5,7 +5,7 @@
 // @include     https://mail.google.com/mail/*
 // @include     https://rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
 // @include     https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
-// @version     0.0.2rev20160630
+// @version     0.0.3rev20160630
 // @require     https://code.jquery.com/jquery-2.2.2.min.js
 // @require     https://cdn.rawgit.com/dominique-unruh/mathquill/ea34612/cdn/mathquill.min.js
 // @resource    options_html options.html
