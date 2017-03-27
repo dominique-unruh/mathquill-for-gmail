@@ -5,7 +5,7 @@
 // @include     https://mail.google.com/mail/*
 // @include     https://rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
 // @include     https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
-// @version     0.0.3rev20160630
+// @version     0.0.3rev20170327
 // @require     https://code.jquery.com/jquery-2.2.2.min.js
 // @require     https://cdn.rawgit.com/dominique-unruh/mathquill/ea34612/cdn/mathquill.min.js
 // @resource    options_html options.html
@@ -132,7 +132,7 @@ function edit_math(img) {
 
   previousActiveElement = document.activeElement;
 
-  if (id!==null) {
+  if (id!==null && id!==undefined) {
     var m = $("#"+id);
     if (m.length>0) {
       current_math = MQ(m[0]).focus();
@@ -148,6 +148,7 @@ function edit_math(img) {
   img.after(mathSpan);
   img[0].style.filter = "blur(.5px)";
 
+  
   var math = MQ.MathField(mathSpan[0], {
     handlers: { enter: function (m) { mq_close(m,true); } },
   });
@@ -420,26 +421,27 @@ function add_macros() {
 
 /* Main program */
 
+parse_hotkey(get_option_with_default("hotkey"));
+install_css();
+install_image_click_handler();
+install_keydown_handler();
+install_keypress_handler();
+install_paste_handler();
+add_macros();
+GM_registerMenuCommand("MathQuill for Gmail - Options",
+                       function() {
+                         try {
+                           GM_openInTab("https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html",false);
+                         } catch (e) {
+                           console.error(e);
+                         }},
+                       "q");
+
 if (document.location=="https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html") {
   console.log("Options page");
   options_page();
-} else {
-  parse_hotkey(get_option_with_default("hotkey"));
-  install_css();
-  install_image_click_handler();
-  install_keydown_handler();
-  install_keypress_handler();
-  install_paste_handler();
-  add_macros();
-  GM_registerMenuCommand("MathQuill for Gmail - Options",
-                         function() {
-                           try {
-                             GM_openInTab("https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html",false);
-                           } catch (e) {
-                             console.error(e);
-                           }},
-                         "q");
-}
+};
+
 
 console.log("MathQuill script loaded on "+document.location);
 
