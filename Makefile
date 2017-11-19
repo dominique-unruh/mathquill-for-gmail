@@ -6,7 +6,8 @@ git : up_version
 	nohup git-gui &
 	sleep 60
 
-build : browser-polyfill.min.js mathquill.min.js
+build : browser-polyfill.min.js mathquill.min.js jquery.min.js
+	web-ext build -o -i mathquill Makefile "*~" README.md run
 
 browser-polyfill.min.js:
 	if ! [ -e webextension-polyfill ]; then git clone https://github.com/mozilla/webextension-polyfill.git; fi

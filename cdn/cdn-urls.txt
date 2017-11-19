@@ -1,1 +1,0 @@
-MathQuill v.0.10.1: https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/cdn/mathquill-0.10.1/mathquill.min.js
