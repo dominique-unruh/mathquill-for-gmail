@@ -1,20 +1,7 @@
-// ==UserScript==
-// @name        MathQuill for Gmail
-// @description	WYSIWYG editing of math in Gmail (and possibly other pages)
-// @namespace   http://unruh.de
-// @include     https://mail.google.com/mail/*
-// @include     https://rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
-// @include     https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/*/mathquill-for-gmail-options.html
-// @version     0.0.4rev20170327
-// @require     https://code.jquery.com/jquery-2.2.2.min.js
-// @require     https://cdn.rawgit.com/dominique-unruh/mathquill/ea34612/cdn/mathquill.min.js
-// @resource    options_html options.html
-// @grant       GM_registerMenuCommand
-// @grant       GM_getResourceText
-// @grant       GM_getValue
-// @grant       GM_setValue
-// @grant       GM_openInTab
-// ==/UserScript==
+
+// TODO: browser action for activating MathQuill on any given page: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/Tabs/executeScript, https://developer.mozilla.org/en-US/Add-ons/WebExtensions/user_interface/Browser_action
+
+document.body.style.border = "5px solid blue";
 
 var MQ = MathQuill.getInterface(2);
 
@@ -305,106 +292,6 @@ function install_css() {
   }
 }
 
-function get_option_with_default(option) {
-  var value = GM_getValue(option);
-  if (value==undefined) {
-    if (option=="hotkey")
-      return "ctrl-m";
-    else {
-      console.error("No default for option "+option);
-      return undefined;
-    }
-  } else
-    return value;
-}
-
-function parse_hotkey(hotkey) {
-  var parts = hotkey.split("-");
-  hotkey_ctrl = false;
-  hotkey_alt = false;
-  hotkey_shift = false;
-  while (parts.length>1) {
-    var part = parts[0].toLowerCase();
-    if (part=="ctrl")
-      hotkey_ctrl = true;
-    else if (part=="shift")
-      hotkey_shift = true;
-    else if (part=="alt")
-      hotkey_alt = true;
-    else
-      break;
-    parts.shift();
-  }
-  if (parts.length!=1) {
-    console.error("Invalid hotkey "+hotkey+" (invalid suffix "+parts.join("-")+")");
-    return null;
-  }
-  part = parts[0];
-  if (part.length != 1) {
-    console.error("Invalid hotkey "+hotkey+" (last part should be a single letter)",hotkey,parts,part);
-    return null;
-  }
-  var chr = part[0].toUpperCase();
-  if (chr < 'A' || chr > 'Z') {
-    console.error("Invalid hotkey "+hotkey+" (last part should be a-z)",hotkey,parts,part,chr);
-    return null;
-  }
-  hotkey_keycode = chr.charCodeAt(0);
-  return true;
-}
-
-function options_page() {
-  function save_options() {
-    $(".option").each(function () {
-      if ($(this).hasClass("changed")) {
-        var name = this.name;
-        var value = this.value;
-        console.log("Saving option: "+name+" := "+value);
-        GM_setValue(name,value);
-      }
-    });
-  };
-  function check_options() {
-    var hotkey = $("#hotkey")[0].value;
-    var parse_success = parse_hotkey(hotkey);
-    console.log("hotkey",parse_success);
-    if (parse_success===null)
-      return "Invalid hotkey '"+hotkey+"'";
-    return null;
-  };
-
-  try {
-    document.body.innerHTML = GM_getResourceText("options_html");
-
-    $(".option").each(function () {
-      var name = this.name;
-      this.value = get_option_with_default(name);
-    });
-
-    $(".option").on("input",function () { $("#save").removeAttr("disabled"); $(this).addClass("changed"); });
-
-
-    $("#save").on("click",function () { 
-      try {
-        var error = check_options();
-        if (error==null) {
-          $("#error").text("");
-        } else {          
-          $("#error").text("ERROR: "+error+" (options not saved)");
-          return;
-        }
-        save_options();
-        $("#save").attr("disabled","disabled");
-        $(".option").removeClass("changed");
-      } catch (e) {
-        console.error(e);
-      }
-    });
-
-  } catch (e) {
-    console.error(e);
-  }
-}
 
 
 /* Adds macros to the MathQuill editor. Currently these are hardcoded.
@@ -421,29 +308,31 @@ function add_macros() {
 
 /* Main program */
 
-parse_hotkey(get_option_with_default("hotkey"));
-install_css();
-install_image_click_handler();
-install_keydown_handler();
-install_keypress_handler();
-install_paste_handler();
-add_macros();
-GM_registerMenuCommand("MathQuill for Gmail - Options",
-                       function() {
-                         try {
-                           GM_openInTab("https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html",false);
-                         } catch (e) {
-                           console.error(e);
-                         }},
-                       "q");
-
-if (document.location=="https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html") {
-  console.log("Options page");
-  options_page();
+async function main() {
+  parse_hotkey(await get_option_with_default("hotkey"));
+  install_css();
+  install_image_click_handler();
+  install_keydown_handler();
+  install_keypress_handler();
+  install_paste_handler();
+  add_macros();
+  // GM_registerMenuCommand("MathQuill for Gmail - Options",
+  //                        function() {
+  //                          try {
+  //                            GM_openInTab("https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html",false);
+  //                          } catch (e) {
+  //                            console.error(e);
+  //                          }},
+  //                        "q");
+  
+  // if (document.location=="https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html") {
+  //   console.log("Options page");
+  //   options_page();
+  // };
+  console.log("MathQuill script loaded on "+document.location);
 };
 
-
-console.log("MathQuill script loaded on "+document.location);
+main();
 
 
 
