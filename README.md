@@ -1,13 +1,12 @@
-This plugin (Greasemonkey userscript) allows you to edit formulas in
+This browser plugin allows you to edit formulas in
 Gmail messages using a graphical formula editor.
 
-The script uses [MathQuill] (http://mathquill.com/) as the formula
-editor, and the [CodeCogs server] (https://latex.codecogs.com/) (with
+The script uses [MathQuill](http://mathquill.com/) as the formula
+editor, and the [CodeCogs server](https://latex.codecogs.com/) (with
 their generous permission [\[1\]](#codecogs)) for generating the
 images.
 
-See the [Wiki]
-(https://github.com/dominique-unruh/mathquill-for-gmail/wiki) for more
+See the [Wiki](https://github.com/dominique-unruh/mathquill-for-gmail/wiki) for more
 information.
 
 ----
