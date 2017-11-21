@@ -1,12 +1,17 @@
 MATHQUILL_VERSION=0.10.1
 
-all : git
+all : prereqs
 
-git : up_version
-	nohup git-gui &
-	sleep 60
+GENERATED = browser-polyfill.min.js mathquill.min.js jquery.min.js icon-32.png icon-16.png icon-48.png icon-96.png icon-128.png icon-64.png
 
-build : browser-polyfill.min.js mathquill.min.js jquery.min.js
+icon-%.png : icon.svg Makefile
+	SIZE=$@; SIZE="$${SIZE%.png}"; SIZE="$${SIZE#icon-}"; \
+	  inkscape --export-png=$@ --export-background-opacity=0 -w "$$SIZE" --without-gui $<
+	 #SIZE=$@; SIZE="$${SIZE%.png}"; SIZE="$${SIZE#icon-}"; convert -background transparent -resize "$$SIZE"x"$$SIZE" $< $@
+
+prereqs : $(GENERATED)
+
+build : $(GENERATED)
 	web-ext build -o -i mathquill Makefile "*~" README.md run
 
 browser-polyfill.min.js:

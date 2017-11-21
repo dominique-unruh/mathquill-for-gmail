@@ -5,11 +5,36 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="100mm"
    height="100mm"
    viewBox="0 0 100 100"
    version="1.1"
-   id="svg8">
+   id="svg8"
+   sodipodi:docname="icon.svg"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview10"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:zoom="0.62441667"
+     inkscape:cx="188.97638"
+     inkscape:cy="188.97638"
+     inkscape:window-x="0"
+     inkscape:window-y="75"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg8" />
   <defs
      id="defs2" />
   <metadata

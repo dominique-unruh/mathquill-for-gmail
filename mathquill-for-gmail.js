@@ -1,8 +1,3 @@
-
-// TODO: browser action for activating MathQuill on any given page: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/Tabs/executeScript, https://developer.mozilla.org/en-US/Add-ons/WebExtensions/user_interface/Browser_action
-
-document.body.style.border = "5px solid blue";
-
 var MQ = MathQuill.getInterface(2);
 
 /** The document that was active (focussed) before the math editor was opened.
@@ -316,19 +311,6 @@ async function main() {
   install_keypress_handler();
   install_paste_handler();
   add_macros();
-  // GM_registerMenuCommand("MathQuill for Gmail - Options",
-  //                        function() {
-  //                          try {
-  //                            GM_openInTab("https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html",false);
-  //                          } catch (e) {
-  //                            console.error(e);
-  //                          }},
-  //                        "q");
-  
-  // if (document.location=="https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html") {
-  //   console.log("Options page");
-  //   options_page();
-  // };
   console.log("MathQuill script loaded on "+document.location);
 };
 

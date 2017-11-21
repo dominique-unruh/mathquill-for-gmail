@@ -1,0 +1,7 @@
+	* Bugfix: Removed blue border around web-pages.
+
+	* Icon for extension is now a PNG (SVG not supported by Chrome).
+
+2017-11-20 v0.1.0
+
+	* Ported to WebExtensions framework (from GreaseMonkey)
