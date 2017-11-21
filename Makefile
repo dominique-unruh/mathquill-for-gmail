@@ -14,6 +14,10 @@ prereqs : $(GENERATED)
 build : $(GENERATED)
 	web-ext build -o -i mathquill Makefile "*~" README.md run
 
+lint : browser-polyfill.min.js mathquill.min.js jquery.min.js
+	web-ext lint -i mathquill Makefile "*~" README.md run jquery.min.js
+
+
 browser-polyfill.min.js:
 	if ! [ -e webextension-polyfill ]; then git clone https://github.com/mozilla/webextension-polyfill.git; fi
 	cd webextension-polyfill && git pull
