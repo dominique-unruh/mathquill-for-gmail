@@ -1,5 +1,7 @@
 ??? v.0.1.2
 
+	* Support for user configured macros for common subformulas
+
 	* Updated integrated MathQuill version to 2e9d779
 
 2017-11-21 v0.1.1

@@ -26,14 +26,15 @@ function parse_macros(macros) {
   var results = [];
   for (var i=0; i<lines.length; i++) {
     //console.log(lines[i]);
+    if (lines[i].trim()=="") continue;
     var split = lines[i].split("=");
     if (split.length<2) {
-      console.error("Invalid macro definition "+line+" (no = sign)");
+      console.error("Invalid macro definition "+lines[i]+" (no = sign)");
       return null;
     }
     var name = split.shift().trim();
     if (name.charAt(0)!='\\') {
-      console.error("Invalid macro definition "+line+" (does not start with \\)");
+      console.error("Invalid macro definition "+lines[i]+" (does not start with \\)");
       return null;
     }
     name = name.substr(1);
@@ -41,7 +42,7 @@ function parse_macros(macros) {
     //console.log("#"+name+"#"+code+"#");
     results.push({name:name, code:code});
   }
-  console.log(results);
+  //console.log(results);
   return results;
 }
 
