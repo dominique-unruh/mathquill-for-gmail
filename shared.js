@@ -1,16 +1,48 @@
 // Functions shared by mathquill_for_gmail.user.js and options.js
 
-async function get_option_with_default(option) {
-    var value = await browser.storage.sync.get(option);
-    if (value.hasOwnProperty(option))
-	return value[option]
+//var hotkey_keycode;
 
-    if (option=="hotkey")
-      return "ctrl-m";
-    else {
-      console.error("No default for option "+option);
-      return undefined;
+async function get_option_with_default(option) {
+  var value = await browser.storage.sync.get(option);
+  if (value.hasOwnProperty(option))
+    return value[option]
+  
+  if (option=="hotkey")
+    return "ctrl-m";
+  else if (option=="macros")
+    return "\\abs = \\left|\\cursor\\right| \n\
+\\norm = \\left\\lVert\\cursor\\right\\rVert \n\
+\\ket = \\left|\\cursor\\right\\rangle \n\
+\\bra = \\left\\langle\\cursor\\right| \n\
+\\braket = \\left\\langle\\cursor\\mid\\right\\rangle";
+  else {
+    console.error("No default for option "+option);
+    return undefined;
+  }
+}
+
+function parse_macros(macros) {
+  var lines = macros.split('\n');
+  var results = [];
+  for (var i=0; i<lines.length; i++) {
+    //console.log(lines[i]);
+    var split = lines[i].split("=");
+    if (split.length<2) {
+      console.error("Invalid macro definition "+line+" (no = sign)");
+      return null;
     }
+    var name = split.shift().trim();
+    if (name.charAt(0)!='\\') {
+      console.error("Invalid macro definition "+line+" (does not start with \\)");
+      return null;
+    }
+    name = name.substr(1);
+    var code = split.join("=").trim();
+    //console.log("#"+name+"#"+code+"#");
+    results.push({name:name, code:code});
+  }
+  console.log(results);
+  return results;
 }
 
 function parse_hotkey(hotkey) {

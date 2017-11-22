@@ -18,6 +18,11 @@ function check_options() {
     console.log("hotkey",parse_success);
     if (parse_success===null)
 	return "Invalid hotkey '"+hotkey+"'";
+    var macros = $("#macros")[0].value;
+    var parse_success = parse_macros(macros);
+    console.log("macros",parse_success);
+    if (parse_success===null)
+	return "Invalid macro definition '"+macros+"'";
     return null;
 };
 

@@ -291,12 +291,10 @@ function install_css() {
 
 /* Adds macros to the MathQuill editor. Currently these are hardcoded.
    TODO: configurable macros */
-function add_macros() {
-  MQ.addMacro("abs","\\left|\\cursor\\right|");
-  MQ.addMacro("norm","\\left\\lVert\\cursor\\right\\rVert");
-  MQ.addMacro("ket","\\left|\\cursor\\right\\rangle");
-  MQ.addMacro("bra","\\left\\langle\\cursor\\right|");
-  MQ.addMacro("braket","\\left\\langle\\cursor\\mid\\right\\rangle");
+async function add_macros() {
+  var macros = parse_macros(await get_option_with_default("macros"));
+  for (var i=0; i<macros.length; i++)
+    MQ.addMacro(macros[i].name,macros[i].code);
 }
 
 
