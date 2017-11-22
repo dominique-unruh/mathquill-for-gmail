@@ -2,3 +2,6 @@
 /webextension-polyfill
 /mathquill
 /web-ext-artifacts
+/build
+/screenshots/*-1280.png
+/tmp

@@ -1,3 +1,7 @@
+2017-11-21 v0.1.1
+
+	* Created a Chrome version of the plugin (needs a slightly different manifest.json)
+
 	* Bugfix: Removed blue border around web-pages.
 
 	* Icon for extension is now a PNG (SVG not supported by Chrome).
