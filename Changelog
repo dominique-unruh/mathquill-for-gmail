@@ -1,0 +1,17 @@
+??? v.0.1.2
+
+	* Support for user configured macros for common subformulas
+
+	* Updated integrated MathQuill version to 2e9d779
+
+2017-11-21 v0.1.1
+
+	* Created a Chrome version of the plugin (needs a slightly different manifest.json)
+
+	* Bugfix: Removed blue border around web-pages.
+
+	* Icon for extension is now a PNG (SVG not supported by Chrome).
+
+2017-11-20 v0.1.0
+
+	* Ported to WebExtensions framework (from GreaseMonkey)

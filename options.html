@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      .changed { border: solid 1px red; }
+      #error { color: red; font-weight: bold; }
+      .description { font-size: smaller; }
+      .optionname { font-weight: bold; }
+    </style>
+    <script src="jquery.min.js"></script>
+    <script src="browser-polyfill.min.js"></script>
+    <script src="shared.js"></script>
+  </head>
+  <body>
+    <form>
+      <button disabled="disabled" id=save accesskey="s" type=button>Save</button>
+      
+      <div id="error"></div>
+      
+      <table>
+	<tr style="vertical-align:top">
+	  <td class="optionname">Hotkey:</td>
+	  <td><input class=option name=hotkey id=hotkey></input></td>
+	  <td class=description>Syntax: [ctrl-][alt-][shift-]x where x is a single letter (a-z). (Only letters are supported in hotkeys.)</td>
+	</tr>
+	<tr style="vertical-align:top">
+	  <td class="optionname">Macros:</td>
+	  <td><textarea class=option cols=50 rows=6 name=macros id=macros></textarea></td>
+	  <td class=description>
+	    Macros for abbreviating common subformulas. One per line.
+	    See the <a href=https://github.com/dominique-unruh/mathquill-for-gmail/wiki/User-defined-macros>documentation.</a>
+	  </td>
+	</tr>
+      </table>
+    </form>
+    <script src="options.js"></script>
+  </body>
+</html>
+
