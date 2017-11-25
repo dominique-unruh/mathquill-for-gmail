@@ -7,6 +7,7 @@
       #error { color: red; font-weight: bold; }
       .description { font-size: smaller; }
       .optionname { font-weight: bold; }
+      .reset:after { content: "(Reset)"; font-weight: bold; color: blue; }
     </style>
     <script src="jquery.min.js"></script>
     <script src="browser-polyfill.min.js"></script>
@@ -19,19 +20,31 @@
       <div id="error"></div>
       
       <table>
+
 	<tr style="vertical-align:top">
-	  <td class="optionname">Hotkey:</td>
+	  <td class="optionname">Hotkey:<br><a class=reset name="hotkey"/></td>
 	  <td><input class=option name=hotkey id=hotkey></input></td>
 	  <td class=description>Syntax: [ctrl-][alt-][shift-]x where x is a single letter (a-z). (Only letters are supported in hotkeys.)</td>
 	</tr>
+	
 	<tr style="vertical-align:top">
-	  <td class="optionname">Macros:</td>
+	  <td class="optionname">LaTeX rendering service:<br><a class=reset name="renderurl"/></td>
+	  <td><input class=option name=renderurl id=renderurl></input></td>
+	  <td class=description>
+	    URL of service for rendering math.
+	    The URL must contain @@@ which will be replaced by the LaTeX code to be rendered.
+	  </td>
+	</tr>
+	
+	<tr style="vertical-align:top">
+	  <td class="optionname">Macros:<br><a class=reset name="macros"/></td>
 	  <td><textarea class=option cols=50 rows=6 name=macros id=macros></textarea></td>
 	  <td class=description>
 	    Macros for abbreviating common subformulas. One per line.
 	    See the <a href=https://github.com/dominique-unruh/mathquill-for-gmail/wiki/User-defined-macros>documentation.</a>
 	  </td>
 	</tr>
+	
       </table>
     </form>
     <script src="options.js"></script>

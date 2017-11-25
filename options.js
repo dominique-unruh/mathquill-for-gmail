@@ -38,6 +38,16 @@ restore_options();
 $(".option").on("input",function () {
     $("#save").removeAttr("disabled"); $(this).addClass("changed"); });
 
+$(".reset").on("click", function () {
+  var option = $(this).attr('name');
+  console.log($(this)[0]);
+  var def = get_option_default(option);
+  $("#"+option).addClass("changed");
+  console.log($("#"+option)[0]);
+  $("#"+option)[0].value = def;
+  $("#save").removeAttr("disabled");
+});
+
 $("#save").on("click",function () { 
     var error = check_options();
     if (error==null) {
@@ -50,5 +60,6 @@ $("#save").on("click",function () {
     $("#save").attr("disabled","disabled");
     $(".option").removeClass("changed");
 });
+
 
 browser.storage.local.get().then(console.log,console.error);

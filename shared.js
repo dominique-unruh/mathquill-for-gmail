@@ -2,11 +2,7 @@
 
 //var hotkey_keycode;
 
-async function get_option_with_default(option) {
-  var value = await browser.storage.sync.get(option);
-  if (value.hasOwnProperty(option))
-    return value[option]
-  
+function get_option_default(option) {
   if (option=="hotkey")
     return "ctrl-m";
   else if (option=="macros")
@@ -15,10 +11,19 @@ async function get_option_with_default(option) {
 \\ket = \\left|\\cursor\\right\\rangle \n\
 \\bra = \\left\\langle\\cursor\\right| \n\
 \\braket = \\left\\langle\\cursor\\mid\\right\\rangle";
+  else if (option=="renderurl")
+    return "https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09@@@";
   else {
     console.error("No default for option "+option);
     return undefined;
   }
+}
+
+async function get_option_with_default(option) {
+  var value = await browser.storage.sync.get(option);
+  if (value.hasOwnProperty(option))
+    return value[option]
+  return get_option_default(option);
 }
 
 function parse_macros(macros) {

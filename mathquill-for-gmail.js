@@ -6,17 +6,26 @@ var previousActiveElement = null;
 /** The current math editor (if there is one) */
 var current_math = null;
 
+var renderurl = get_option_with_default("renderurl");
+
+async function get_render_url(latex) {
+  console.log("renderurl",await renderurl);
+  return (await renderurl).replace("@@@",encodeURIComponent(latex));
+};
+
 /*
   Updates the img-element "img" to show the math described by LaTeX code ltx.
 
   img -- a jQuery object containing one img
 */
-function update_pic(img,ltx) {
-  var url = "https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09" + encodeURIComponent(ltx);
+async function update_pic(img,ltx) {
+  var url;
   if (ltx=="") {
     ltx = "<empty math>";
-    url = "https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09?";
-  }
+    url = await get_render_url("?");
+  } else
+    url = await get_render_url(ltx);
+
   var img0 = img[0];
   img.one("load",function () {
     try {
@@ -81,7 +90,7 @@ console.log("element_before_cursor",container,idx);
 
     If update==true, the image is updated, otherwise the edit is canceled
 */
-function mq_close(math,update) {
+async function mq_close(math,update) {
   try {
     //console.log("Closing MQ");
     current_math = null;
@@ -98,7 +107,7 @@ function mq_close(math,update) {
     range.setEndAfter(img[0]);
     sel.addRange(range);
     if (update) 
-      update_pic(img,ltx); // Should happen after fixing cursor since it may delete the img
+      await update_pic(img,ltx); // Should happen after fixing cursor since it may delete the img
     else
       reset_pic(img);
   } catch (e) {
@@ -144,7 +153,7 @@ function is_mq_img(img) {
   if (img == null) return false;
   if (img.tagName != "IMG") return false;
   if (img.src == null) return false;
-  if (!img.src.startsWith("https://latex.codecogs.com/") && !img.src.startsWith("http://latex.codecogs.com/")) return false;
+  if (!img.src.startsWith("https://latex.codecogs.com/") && !img.src.startsWith("http://latex.codecogs.com/")) return false; // TODO: should deal with other image render URLs, too
   return true;
 }
 
@@ -168,9 +177,9 @@ function install_image_click_handler() {
   window.addEventListener("click",image_handler,true);
 };
 
-function create_math() {
+async function create_math() {
   var img = $("<img>");
-  img.attr("src","https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09?");
+  img.attr("src",await get_render_url("?"));
   img.attr("alt","<empty math>");
   img.attr("title","<empty math>");
   img[0].style.width = ".5em";
@@ -229,7 +238,7 @@ function install_keypress_handler() {
 
 
 function install_keydown_handler() {
-  window.addEventListener("keydown",function(event) {
+  window.addEventListener("keydown", async function(event) {
     try {
       // If there is an active math editor, dispatch keydown events directly to that math editor
       // This avoids triggering key events of the webpage
@@ -246,11 +255,9 @@ function install_keydown_handler() {
           reroute_event(event);
         return;
       }
-
-      /* console.log("checking key",event.ctrlKey==hotkey_ctrl && event.shiftKey==hotkey_shift && event.altKey==hotkey_alt && event.keyCode==hotkey_keycode,
-                  event.ctrlKey==hotkey_ctrl, event.shiftKey==hotkey_shift, event.altKey==hotkey_alt, event.keyCode==hotkey_keycode,
-                  "config",hotkey_ctrl, hotkey_shift, hotkey_alt, hotkey_keycode             )  */
+      
       if (event.ctrlKey==hotkey_ctrl && event.shiftKey==hotkey_shift && event.altKey==hotkey_alt && event.keyCode==hotkey_keycode) {
+
         var img = element_before_cursor();
         console.log("before cursor: ",img);
         if (is_mq_img(img)) {
@@ -261,7 +268,7 @@ function install_keydown_handler() {
         //console.log("Mathquill: insert math");
         event.stopPropagation();
 
-        var img = create_math();
+        var img = await create_math();
         var sel = document.getSelection();
         sel.deleteFromDocument();
         sel.getRangeAt(0).insertNode(img);
