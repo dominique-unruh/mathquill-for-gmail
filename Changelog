@@ -1,5 +1,9 @@
 ??? v.0.1.2
 
+	* Support for configuring the service for rendering formulas (not fully operational)
+
+	* Options can be reset to default
+
 	* Support for user configured macros for common subformulas
 
 	* Updated integrated MathQuill version to 2e9d779
