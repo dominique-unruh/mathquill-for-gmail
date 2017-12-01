@@ -20,7 +20,9 @@ function get_option_default(option) {
 }
 
 async function get_option_with_default(option) {
+  console.log("get_option_with_default",option);
   var value = await browser.storage.sync.get(option);
+  console.log("-- value",value);
   if (value.hasOwnProperty(option))
     return value[option]
   return get_option_default(option);

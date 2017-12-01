@@ -49,7 +49,8 @@ function reset_pic(img) {
     return;
   }
 
-  var width = (img0.naturalWidth*0.028)+"em";
+  var scaling = 0.028;
+  var width = (img0.naturalWidth*scaling)+"em";
   img.removeAttr("style");
   img0.style.height = "auto";
   img0.style.width = width;
@@ -152,8 +153,12 @@ function edit_math(img) {
 function is_mq_img(img) {
   if (img == null) return false;
   if (img.tagName != "IMG") return false;
-  if (img.src == null) return false;
-  if (!img.src.startsWith("https://latex.codecogs.com/") && !img.src.startsWith("http://latex.codecogs.com/")) return false; // TODO: should deal with other image render URLs, too
+  var src = img.src;
+  if (src == null) return false;
+  if (!src.startsWith("https://latex.codecogs.com/") &&
+      !src.startsWith("http://latex.codecogs.com/") &&
+      !src.startsWith("https://chart.googleapis.com/chart?")
+     ) return false; // Only recognizes known rendering URLs. Can we recognize custom ones?
   return true;
 }
 
