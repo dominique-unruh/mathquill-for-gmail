@@ -2,7 +2,7 @@ MATHQUILL_VERSION=0.10.1
 
 all : build/mathquill_for_gmail_firefox.zip build/mathquill_for_gmail_chrome.zip
 
-GENERATED = browser-polyfill.min.js mathquill.min.js jquery.min.js icon-32.png icon-16.png icon-48.png icon-96.png icon-128.png icon-64.png
+GENERATED = browser-polyfill.min.js mathquill.min.js mathquill.css jquery.min.js icon-32.png icon-16.png icon-48.png icon-96.png icon-128.png icon-64.png
 
 FILES = $(GENERATED) Changelog LICENSE manifest.json options.html options.js shared.js toolbar-menu.html toolbar-menu.js mathquill-for-gmail.js
 
@@ -37,20 +37,21 @@ browser-polyfill.min.js:
 	cd webextension-polyfill && npm run test
 	cp webextension-polyfill/dist/browser-polyfill.min.js browser-polyfill.min.js
 
-MATHQUILL_PATCHES = unruh/macros # unruh/cases
-MATHQUILL_MASTER = master # Could be a specific revision instead
+MATHQUILL_PATCHES = unruh/macros unruh/mathcal # unruh/cases
+MATHQUILL_MASTER = 2e9d779
 
-mathquill.min.js:
+mathquill.min.js mathquill.css:
 	if ! [ -e mathquill ]; then git clone git@github.com:mathquill/mathquill.git; fi
 	cd mathquill && if ! git remote | grep '^unruh$$'; then git remote add unruh git@github.com:dominique-unruh/mathquill.git; fi
 	cd mathquill && git fetch origin
 	cd mathquill && git fetch unruh
-	cd mathquill && git checkout master
+	cd mathquill && git checkout $(MATHQUILL_MASTER)
 	cd mathquill && for i in $(MATHQUILL_PATCHES); do git merge -m "Merging $$i" "$$i"; done
 
 	cd mathquill && npm install
 	make -C mathquill
 	cp mathquill/build/mathquill.min.js mathquill.min.js
+	cp mathquill/build/mathquill.css mathquill.css
 
 up_version :
 	./up-version.sh

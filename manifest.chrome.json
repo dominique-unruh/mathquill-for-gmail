@@ -35,6 +35,7 @@
     {
       "matches": [
         "https://mail.google.com/mail/*",
+        "https://inbox.google.com/*",
         "https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html"
       ],
       "js": [
@@ -43,6 +44,9 @@
         "browser-polyfill.min.js",
         "shared.js",
         "mathquill-for-gmail.js"
+      ],
+      "css": [
+        "mathquill.css"
       ]
     }
   ]

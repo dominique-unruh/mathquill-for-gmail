@@ -289,17 +289,6 @@ function install_keydown_handler() {
   }, true);
 }
 
-/* Adds the mathquill.css style-sheet to the current page (needed for math editors to render correctly */
-function install_css() {
-  try {
-    var link = $("<link>").attr("rel","stylesheet").attr("type","text/css").attr("href","https://cdn.rawgit.com/dominique-unruh/mathquill/ea34612/cdn/mathquill.css");
-    link.appendTo("head");
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-
 
 /* Adds macros to the MathQuill editor. Currently these are hardcoded.
    TODO: configurable macros */
@@ -315,7 +304,7 @@ async function add_macros() {
 
 async function main() {
   parse_hotkey(await get_option_with_default("hotkey"));
-  install_css();
+  //install_css(); // Done via manifest.json
   install_image_click_handler();
   install_keydown_handler();
   install_keypress_handler();

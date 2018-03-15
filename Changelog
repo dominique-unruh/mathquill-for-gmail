@@ -10,6 +10,10 @@
 
 	* Updated jQuery to version 3.3.1
 
+	* Supporting Google Inbox (http://inbox.google.com)
+
+	* Supporting \mathcal for script font
+
 2017-11-21 v0.1.1
 
 	* Created a Chrome version of the plugin (needs a slightly different manifest.json)
