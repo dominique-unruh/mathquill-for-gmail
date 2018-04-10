@@ -37,16 +37,18 @@ browser-polyfill.min.js:
 	cd webextension-polyfill && npm run test
 	cp webextension-polyfill/dist/browser-polyfill.min.js browser-polyfill.min.js
 
-MATHQUILL_PATCHES = unruh/macros unruh/mathcal # unruh/cases
+MATHQUILL_PATCHES = unruh/macros unruh/mathcal unruh/cases
 MATHQUILL_MASTER = 2e9d779
 
 mathquill.min.js mathquill.css:
 	if ! [ -e mathquill ]; then git clone git@github.com:mathquill/mathquill.git; fi
 	cd mathquill && if ! git remote | grep '^unruh$$'; then git remote add unruh git@github.com:dominique-unruh/mathquill.git; fi
+	cd mathquill && git stash
 	cd mathquill && git fetch origin
 	cd mathquill && git fetch unruh
 	cd mathquill && git checkout $(MATHQUILL_MASTER)
 	cd mathquill && for i in $(MATHQUILL_PATCHES); do git merge -m "Merging $$i" "$$i"; done
+	patch -i ../patch1 -u -d mathquill -p1
 
 	cd mathquill && npm install
 	make -C mathquill
