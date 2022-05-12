@@ -6,13 +6,13 @@
 
 	* Support for user configured macros for common subformulas
 
-	* Updated integrated MathQuill version to 2e9d779
+	* Updated integrated MathQuill version to 685bda1
 
-	* Updated jQuery to version 3.3.1
+	* Updated jQuery to version 3.6.0
 
 	* Supporting Google Inbox (http://inbox.google.com)
 
-	* Supporting \mathcal for script font
+	* Supporting \mathcal for script font, \cases for cases
 
 2017-11-21 v0.1.1
 
