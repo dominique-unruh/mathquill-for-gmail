@@ -1,1 +1,1 @@
-web-ext run --start-url "https://cdn.rawgit.com/dominique-unruh/mathquill-for-gmail/b1d6409/mathquill-for-gmail-options.html" --verbose
+web-ext run --start-url https://www.example.com/ --verbose
