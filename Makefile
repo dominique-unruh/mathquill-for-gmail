@@ -27,7 +27,7 @@ manifest.chrome.json : manifest.json
 	python3 mk_chrome_manifest.py
 
 lint : $(GENERATED)
-	web-ext lint -i mathquill Makefile "*~" README.md run jquery.min.js
+	web-ext lint -i mathquill Makefile "*~" README.md run
 
 browser-polyfill.min.js:
 	if ! [ -e webextension-polyfill ]; then git clone https://github.com/mozilla/webextension-polyfill.git; fi
@@ -38,7 +38,7 @@ browser-polyfill.min.js:
 	cp webextension-polyfill/dist/browser-polyfill.min.js browser-polyfill.min.js
 
 MATHQUILL_PATCHES = unruh/macros unruh/mathcal unruh/cases
-MATHQUILL_MASTER = 248691d
+MATHQUILL_MASTER = 685bda1154bb361b36ef1a834bf71686a1231c5d
 
 mathquill.min.js mathquill.css:
 	if ! [ -e mathquill ]; then git clone git@github.com:mathquill/mathquill.git; fi
