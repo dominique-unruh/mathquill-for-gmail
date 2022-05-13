@@ -198,9 +198,18 @@ async function create_math() {
 /* Reroutes an event to current_math object */
 function reroute_event(event) {
   current_math.focus();
-  var event2 = $.Event(event.type,event);
   event.stopPropagation();
   event.stopImmediatePropagation();
+  if (browser.mathquill_for_thunderbird && event.type == "keydown" && !event.altKey && !event.ctrlKey && event.key.length==1) {
+    // For some reason, in Thunderbird, normal keys (letters etc.) are not understood by MathQuill. So we catch them here and pass to MQ via .typedText
+    event.preventDefault();
+    current_math.typedText(event.key);
+    return;
+  }
+  var event2 = $.Event(event.type,event);
+  if (browser.mathquill_for_thunderbird)
+    // In Thunderbird, the target is the whole body and MQ will ignore the key. We fix the target to be the expected one.
+    event2.target = current_math.el().firstChild.firstChild;
   // console.log("redispatching",event,event2,current_math);
   event2.preventDefault = function() { event.preventDefault(); };
   $(current_math.el()).trigger(event2);
@@ -256,6 +265,13 @@ function install_keydown_handler() {
           event.stopPropagation();
           event.preventDefault();
           return;
+        } else if (browser.mathquill_for_thunderbird && (event.keyCode == 10 || event.keyCode == 13) && !event.shiftKey && !event.ctrlKey && !event.altKey) { // Enter
+          // The enter-hander register in edit_math doesn't work in Thunderbird, so we catch Enter ourselves
+          mq_close(current_math,true);
+          event.stopImmediatePropagation();
+          event.stopPropagation();
+          event.preventDefault();
+          return;
         } else
           reroute_event(event);
         return;
@@ -290,8 +306,7 @@ function install_keydown_handler() {
 }
 
 
-/* Adds macros to the MathQuill editor. Currently these are hardcoded.
-   TODO: configurable macros */
+/* Adds macros to the MathQuill editor. */
 async function add_macros() {
   var macros = parse_macros(await get_option_with_default("macros"));
   for (var i=0; i<macros.length; i++)

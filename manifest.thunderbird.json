@@ -2,10 +2,10 @@
   "manifest_version": 2,
   "name": "MathQuill for Gmail/Thunderbird",
   "version": "0.1.2",
-  "description": "WYSIWYG editing of math in Gmail (and possibly other pages)",
+  "description": "WYSIWYG editing of math in Thunderbird",
   "homepage_url": "https://github.com/dominique-unruh/mathquill-for-gmail/wiki",
 
-  "permissions": ["storage", "activeTab"],
+  "permissions": ["compose", "storage"],
 
   "applications": {
     "gecko": {
@@ -31,27 +31,18 @@
       "96": "icon-96.png",
       "128": "icon-128.png"
     },
-    "default_title": "MathQuill for Gmail",
+    "default_title": "MathQuill",
     "default_popup": "toolbar-menu.html"
   },
 
   "options_ui": {
     "page": "options.html"
   },
-  
-  "content_scripts": [
-    {
-      "matches": ["https://mail.google.com/mail/*",
-		  "https://inbox.google.com/*",
-		  "https://www.example.com/"
-		 ],
-      "js": ["jquery.min.js",
-             "mathquill.min.js",
-             "browser-polyfill.min.js",
-             "shared.js",
-             "mathquill-for-gmail.js"],
-      "css": ["mathquill.css"]
-    }
-  ]
+
+  "background": {
+    "scripts": [
+      "thunderbird.js"
+    ]
+  }
 }
 

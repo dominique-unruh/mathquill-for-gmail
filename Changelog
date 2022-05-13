@@ -1,5 +1,7 @@
 ??? v.0.1.2
 
+    * Support for Thunderbird
+
 	* Support for configuring the service for rendering formulas (not fully operational)
 
 	* Options can be reset to default
