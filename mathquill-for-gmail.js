@@ -7,6 +7,8 @@ var previousActiveElement = null;
 var current_math = null;
 
 var renderurl = get_option_with_default("renderurl");
+/** Extra style to be added to the element. */
+var user_style = get_option_with_default("style");
 
 async function get_render_url(latex) {
   console.log("renderurl",await renderurl);
@@ -18,7 +20,7 @@ async function get_render_url(latex) {
 
   img -- a jQuery object containing one img
 */
-async function update_pic(img,ltx) {
+async function update_pic(img, ltx) {
   var url;
   if (ltx=="") {
     ltx = "<empty math>";
@@ -41,7 +43,11 @@ async function update_pic(img,ltx) {
   img.attr("title",ltx);
 }
 
-function reset_pic(img) {
+/** Sets size and style of the formula-picture.
+  Must only be called when the picture is loaded.
+  If the formula is empty, it is removed.
+*/
+async function reset_pic(img) {
   var img0 = img[0];
 
   if (img0.title == "<empty math>") {
@@ -51,10 +57,10 @@ function reset_pic(img) {
 
   var scaling = 0.028;
   var width = (img0.naturalWidth*scaling)+"em";
-  img.removeAttr("style");
+  img.attr("style", await user_style);
   img0.style.height = "auto";
   img0.style.width = width;
-  
+
   if (img[0].naturalHeight >= 45)
     img0.style.verticalAlign = "middle";
 }

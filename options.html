@@ -22,31 +22,39 @@
       
       <table>
 
-	<tr style="vertical-align:top">
-	  <td class="optionname">Hotkey:<br><a class=reset name="hotkey"/></td>
-	  <td><input class=option name=hotkey id=hotkey></input></td>
-	  <td class=description>Syntax: [ctrl-][alt-][shift-]x where x is a single letter (a-z). (Only letters are supported in hotkeys.)</td>
-	</tr>
-	
-	<tr style="vertical-align:top">
-	  <td class="optionname">LaTeX rendering service:<br><a class=reset name="renderurl"/></td>
-	  <td><input class=option name=renderurl id=renderurl></input></td>
-	  <td class=description>
-	    URL of service for rendering math.
-	    The URL must contain @@@ which will be replaced by the LaTeX code to be rendered.
-	    <!-- E.g., https://chart.googleapis.com/chart?cht=tx&chl=@@@ -->
-	  </td>
-	</tr>
-	
-	<tr style="vertical-align:top">
-	  <td class="optionname">Macros:<br><a class=reset name="macros"/></td>
-	  <td><textarea class=option cols=50 rows=6 name=macros id=macros></textarea></td>
-	  <td class=description>
-	    Macros for abbreviating common subformulas. One per line.
-	    See the <a href=https://github.com/dominique-unruh/mathquill-for-gmail/wiki/User-defined-macros>documentation.</a>
-	  </td>
-	</tr>
-	
+        <tr style="vertical-align:top">
+          <td class="optionname">Hotkey:<br><a class=reset name="hotkey"/></td>
+          <td><input class=option name=hotkey id=hotkey></input></td>
+          <td class=description>Syntax: [ctrl-][alt-][shift-]x where x is a single letter (a-z). (Only letters are supported in hotkeys.)</td>
+        </tr>
+
+        <tr style="vertical-align:top">
+          <td class="optionname">LaTeX rendering service:<br><a class=reset name="renderurl"/></td>
+          <td><input class=option name=renderurl id=renderurl></input></td>
+          <td class=description>
+            URL of service for rendering math.
+            The URL must contain @@@ which will be replaced by the LaTeX code to be rendered.
+            <!-- E.g., https://chart.googleapis.com/chart?cht=tx&chl=@@@ -->
+          </td>
+        </tr>
+
+        <tr style="vertical-align:top">
+          <td class="optionname">Macros:<br><a class=reset name="macros"/></td>
+          <td><textarea class=option cols=50 rows=6 name=macros id=macros></textarea></td>
+          <td class=description>
+            Macros for abbreviating common subformulas. One per line.
+            See the <a href=https://github.com/dominique-unruh/mathquill-for-gmail/wiki/User-defined-macros>documentation.</a>
+          </td>
+        </tr>
+
+        <tr style="vertical-align:top">
+          <td class="optionname">Style:<br><a class=reset name="style"/></td>
+          <td><input class=option name=style id=style></input></td>
+          <td class=description>
+            CSS styling to apply to the images. (Width, height, and vertical-align are set automatically.)
+          </td>
+        </tr>
+
       </table>
     </form>
     <script src="options.js"></script>

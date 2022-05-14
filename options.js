@@ -40,10 +40,8 @@ $(".option").on("input",function () {
 
 $(".reset").on("click", function () {
   var option = $(this).attr('name');
-  console.log($(this)[0]);
   var def = get_option_default(option);
   $("#"+option).addClass("changed");
-  console.log($("#"+option)[0]);
   $("#"+option)[0].value = def;
   $("#save").removeAttr("disabled");
 });

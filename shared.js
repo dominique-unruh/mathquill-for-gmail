@@ -13,6 +13,8 @@ function get_option_default(option) {
 \\braket = \\left\\langle\\cursor\\mid\\right\\rangle";
   else if (option=="renderurl")
     return "https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09@@@";
+  else if (option=="style")
+    return "background-color: white;";
   else {
     console.error("No default for option "+option);
     return undefined;
