@@ -9,6 +9,8 @@ var current_math = null;
 var renderurl = get_option_with_default("renderurl");
 /** Extra style to be added to the element. */
 var user_style = get_option_with_default("style");
+/** Extra HTML fragment to be added to the mail. */
+var user_html_insert = get_option_with_default("html_insert");
 
 async function get_render_url(latex) {
   console.log("renderurl",await renderurl);
@@ -63,6 +65,23 @@ async function reset_pic(img) {
 
   if (img[0].naturalHeight >= 45)
     img0.style.verticalAlign = "middle";
+
+  insert_user_html_insert(img);
+}
+
+/** Inserts user specified HTML code in the email (unless already there).
+ It is inserted by default at the beginning of the element that contains `img`.
+ `img` is a jQuery object.
+ */
+async function insert_user_html_insert(img) {
+  var html = await user_html_insert;
+  if ($("#mq-user-html-fragment").length) return;
+  var span = $('<span>');
+  span.attr("id", "mq-user-html-fragment");
+  span.attr("style", "visibility: hidden; width: 0;");
+  span.append(html);
+  img.parent().prepend(span);
+  console.log("doc", document.body.innerHTML);
 }
 
 /* Returns the element just before the cursor.
@@ -77,7 +96,6 @@ function element_before_cursor() {
   var range = sel.getRangeAt(0).cloneRange();
   var idx = range.startOffset - 1;
   var container = range.startContainer;
-console.log("element_before_cursor",container,idx);
   while (true) { // Invariant: the node we look for is left of the start of the range.
     if (range.startOffset <= 0) {
       range.selectNode(range.startContainer);

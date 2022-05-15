@@ -14,7 +14,14 @@ function get_option_default(option) {
   else if (option=="renderurl")
     return "https://latex.codecogs.com/png.latex?\\dpi{300}\\inline%09@@@";
   else if (option=="style")
-    return "background-color: white;";
+    return "filter: url(#mq-color-filter);";
+  else if (option=="html_insert")
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">\n\
+  <filter id="mq-color-filter">\n\
+    <feFlood flood-color="currentColor"/>\n\
+    <feComposite in2="SourceGraphic" operator="in"/>\n\
+  </filter>\n\
+</svg>';
   else {
     console.error("No default for option "+option);
     return undefined;
