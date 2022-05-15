@@ -52,6 +52,12 @@
           <td><input class=option name=style id=style></input></td>
           <td class=description>
             CSS styling to apply to the images. (Width, height, and vertical-align are set automatically.)
+            <!--
+            This should make the picture always appear in current color:
+            * filter: drop-shadow(0 1em 0 currentColor); transform: translateY(-1em); clip-path: inset(1em 0 -1em 0);
+            * filter: drop-shadow(0 1em 0 currentColor); position:relative; bottom:1em; clip-path: inset(1em 0 -1em 0);
+            (Doesn't work well with Thunderbird. And GMail web removes the style when showing the mail.)
+            -->
           </td>
         </tr>
 
