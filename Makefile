@@ -6,7 +6,7 @@ FILES = $(GENERATED) Changelog LICENSE manifest.json options.html options.js sha
 
 icon-%.png : icon.svg Makefile
 	SIZE=$@; SIZE="$${SIZE%.png}"; SIZE="$${SIZE#icon-}"; \
-	  inkscape --export-png=$@ --export-background-opacity=0 -w "$$SIZE" --without-gui $<
+	  inkscape --export-type=png --export-filename=$@ --export-background-opacity=0 -w "$$SIZE" $<
 
 prereqs : $(GENERATED)
 
