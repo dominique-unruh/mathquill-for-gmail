@@ -36,7 +36,7 @@ lint : $(GENERATED)
 
 BROWSER_POLYFILL_VERSION = 0.9.0
 browser-polyfill.min.js : Makefile
-	if ! [ -e webextension-polyfill ]; then git clone --depth 1 --branch $(BROWSER_POLYFILL_VERSION) https://github.com/mozilla/webextension-polyfill.git; fi
+	if ! [ -e webextension-polyfill ]; then git clone --config core.filemode=false --depth 1 --branch $(BROWSER_POLYFILL_VERSION) https://github.com/mozilla/webextension-polyfill.git; fi
 	cd webextension-polyfill && git checkout $(BROWSER_POLYFILL_VERSION)
 	cd webextension-polyfill && npm install
 	cd webextension-polyfill && npm run build
@@ -47,7 +47,7 @@ MATHQUILL_PATCHES = unruh/macros unruh/mathcal unruh/cases # unruh/symbola-from-
 MATHQUILL_MASTER = 685bda1154bb361b36ef1a834bf71686a1231c5d
 
 mathquill.min.js mathquill.css : Makefile
-	if ! [ -e mathquill ]; then git clone git@github.com:mathquill/mathquill.git; fi
+	if ! [ -e mathquill ]; then git clone --config core.filemode=false git@github.com:mathquill/mathquill.git; fi
 	cd mathquill && if ! git remote | grep '^unruh$$'; then git remote add unruh git@github.com:dominique-unruh/mathquill.git; fi
 	cd mathquill && git stash
 	cd mathquill && git fetch origin
